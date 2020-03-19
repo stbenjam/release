@@ -77,7 +77,8 @@ yum install -y git
 mkdir -p /tmp/artifacts
 
 if [ ! -e dev-scripts ] ; then
-  git clone https://github.com/openshift-metal3/dev-scripts.git
+  git clone --branch must-gather --single-branch https://github.com/stbenjam/dev-scripts.git
+  # git clone https://github.com/openshift-metal3/dev-scripts.git
 fi
 cd dev-scripts
 
