@@ -51,4 +51,6 @@ make gather
 EOF
 
 echo "### Downloading logs..."
-ssh $SSHOPTS root@$IP tar -C /tmp/artifacts -czf - must-gather | tar -C ${ARTIFACT_DIR} -xzf -
+ssh $SSHOPTS root@$IP tar -czC "/tmp/artifacts/must-gather" -f "/tmp/artifacts/must-gather.tar.gz" .
+scp $SSHOPTS root@$IP:/tmp/artifacts/must-gather.tar.gz ${ARTIFACT_DIR}
+
