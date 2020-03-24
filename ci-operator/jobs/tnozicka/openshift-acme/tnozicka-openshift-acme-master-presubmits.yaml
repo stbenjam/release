@@ -4,6 +4,7 @@ presubmits:
     always_run: true
     branches:
     - master
+    cluster: api.ci
     context: ci/prow/e2e-cluster-wide
     decorate: true
     decoration_config:
@@ -35,7 +36,9 @@ presubmits:
         - name: JOB_NAME_SAFE
           value: e2e-cluster-wide
         - name: TEST_COMMAND
-          value: make test-e2e-cluster-wide --warn-undefined-variables
+          value: |
+            ./hack/ci-deploy.sh cluster-wide
+            make ci-test-e2e-cluster-wide E2E_JUNITFILE=/tmp/artifacts/junit_report.xml --warn-undefined-variables
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -93,6 +96,7 @@ presubmits:
     always_run: true
     branches:
     - master
+    cluster: api.ci
     context: ci/prow/e2e-single-namespace
     decorate: true
     decoration_config:
@@ -124,7 +128,9 @@ presubmits:
         - name: JOB_NAME_SAFE
           value: e2e-single-namespace
         - name: TEST_COMMAND
-          value: make test-e2e-single-namespace --warn-undefined-variables
+          value: |
+            ./hack/ci-deploy.sh single-namespace
+            make ci-test-e2e-single-namespace E2E_JUNITFILE=/tmp/artifacts/junit_report.xml --warn-undefined-variables
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -182,6 +188,7 @@ presubmits:
     always_run: true
     branches:
     - master
+    cluster: api.ci
     context: ci/prow/e2e-specific-namespaces
     decorate: true
     decoration_config:
@@ -213,7 +220,9 @@ presubmits:
         - name: JOB_NAME_SAFE
           value: e2e-specific-namespaces
         - name: TEST_COMMAND
-          value: make test-e2e-specific-namespaces --warn-undefined-variables
+          value: |
+            ./hack/ci-deploy.sh specific-namespaces
+            make ci-test-e2e-specific-namespaces E2E_JUNITFILE=/tmp/artifacts/junit_report.xml --warn-undefined-variables
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -271,6 +280,7 @@ presubmits:
     always_run: true
     branches:
     - master
+    cluster: api.ci
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -384,6 +394,7 @@ presubmits:
     always_run: true
     branches:
     - master
+    cluster: api.ci
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -497,6 +508,7 @@ presubmits:
     always_run: true
     branches:
     - master
+    cluster: api.ci
     context: ci/prow/verify
     decorate: true
     decoration_config:
@@ -610,6 +622,7 @@ presubmits:
     always_run: true
     branches:
     - master
+    cluster: api.ci
     context: ci/prow/verify-deps
     decorate: true
     decoration_config:

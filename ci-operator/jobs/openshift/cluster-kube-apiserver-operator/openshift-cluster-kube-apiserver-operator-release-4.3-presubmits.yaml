@@ -4,6 +4,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -93,6 +94,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -181,9 +183,10 @@ presubmits:
           secretName: sentry-dsn
     trigger: (?m)^/test( | .* )e2e-aws-operator,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-operator-encryption
     decorate: true
     decoration_config:
@@ -193,6 +196,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-kube-apiserver-operator-release-4.3-e2e-aws-operator-encryption
     rerun_command: /test e2e-aws-operator-encryption
+    run_if_changed: ^(vendor/github.com/openshift/library-go/pkg/operator/encryption)|^(test/e2e-encryption)|^(test/library/encryption)
     spec:
       containers:
       - args:
@@ -275,6 +279,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-upgrade
     decorate: true
     decoration_config:
@@ -350,6 +355,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -465,6 +471,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -578,6 +585,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/verify
     decorate: true
     decoration_config:

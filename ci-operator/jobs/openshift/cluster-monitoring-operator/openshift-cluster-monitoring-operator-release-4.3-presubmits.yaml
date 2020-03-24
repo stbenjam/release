@@ -4,6 +4,37 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
+    context: ci/prow/generate
+    decorate: true
+    name: pull-ci-openshift-cluster-monitoring-operator-generate
+    rerun_command: /test generate
+    spec:
+      containers:
+      - args:
+        - -c
+        - make generate && git diff --exit-code
+        command:
+        - sh
+        env:
+        - name: GO111MODULE
+          value: "on"
+        - name: GOPATH
+          value: /go:/home/prow/go
+        - name: USER
+          value: deadbeef
+        image: quay.io/coreos/jsonnet-ci
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 500m
+    trigger: (?m)^/test generate
+  - agent: kubernetes
+    always_run: true
+    branches:
+    - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -93,6 +124,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-operator
     decorate: true
     decoration_config:
@@ -182,6 +214,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-upgrade
     decorate: true
     decoration_config:
@@ -257,10 +290,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/generate
     decorate: true
-    labels:
-      ci.openshift.io/manually-branched: "true"
     name: pull-ci-openshift-cluster-monitoring-operator-release-4.3-generate
     rerun_command: /test generate
     spec:
@@ -288,6 +320,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -403,10 +436,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/shellcheck
     decorate: true
-    labels:
-      ci.openshift.io/manually-branched: "true"
     name: pull-ci-openshift-cluster-monitoring-operator-release-4.3-shellcheck
     rerun_command: /test shellcheck
     spec:
@@ -429,6 +461,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -542,6 +575,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/vendor
     decorate: true
     decoration_config:

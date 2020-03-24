@@ -53,4 +53,3 @@ EOF
 echo "### Downloading logs..."
 ssh $SSHOPTS root@$IP tar -czC "/tmp/artifacts/must-gather" -f "/tmp/artifacts/must-gather.tar.gz" .
 scp $SSHOPTS root@$IP:/tmp/artifacts/must-gather.tar.gz ${ARTIFACT_DIR}
-

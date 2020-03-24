@@ -8,16 +8,26 @@ import logging
 import os
 import yaml
 
+DEFAULT_CLUSTER = "api.ci"
+BUILD01_CLUSTER = "ci/api-build01-ci-devcluster-openshift-com:6443"
+JOB_MAP = {
+    "pull-ci-openshift-release-master-build01-dry": DEFAULT_CLUSTER,
+    "pull-ci-openshift-release-master-core-dry": DEFAULT_CLUSTER,
+    "pull-ci-openshift-release-master-services-dry": DEFAULT_CLUSTER,
+    "periodic-acme-cert-issuer-for-build01": DEFAULT_CLUSTER,
+    "periodic-build01-upgrade": BUILD01_CLUSTER,
+}
+
 
 def get_desired_cluster(file_path, job):
     """get the desired cluster for a given job defined in file_path."""
     if job.get("agent", "") != "kubernetes":
-        return ""
+        return DEFAULT_CLUSTER
     if job["name"] in JOB_MAP:
         return JOB_MAP[job["name"]]
     if job["name"].endswith("-build01") or migrated(file_path):
         return BUILD01_CLUSTER
-    return ""
+    return DEFAULT_CLUSTER
 
 
 def identify_jobs_to_update(file_path, jobs):
@@ -77,16 +87,6 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s:%(levelname)s:%(message)s"
     )
-
-DEFAULT_CLUSTER = "default"
-BUILD01_CLUSTER = "ci/api-build01-ci-devcluster-openshift-com:6443"
-JOB_MAP = {
-    "pull-ci-openshift-release-master-build01-dry": DEFAULT_CLUSTER,
-    "pull-ci-openshift-release-master-core-dry": DEFAULT_CLUSTER,
-    "pull-ci-openshift-release-master-services-dry": DEFAULT_CLUSTER,
-    "periodic-acme-cert-issuer-for-build01": DEFAULT_CLUSTER,
-    "periodic-build01-upgrade": BUILD01_CLUSTER,
-}
 
 
 def main():

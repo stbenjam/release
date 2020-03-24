@@ -3,6 +3,7 @@ postsubmits:
   - agent: kubernetes
     branches:
     - ^master$
+    cluster: api.ci
     decorate: true
     labels:
       ci.openshift.io/role: infra-canary
@@ -51,6 +52,7 @@ postsubmits:
   - agent: kubernetes
     branches:
     - master
+    cluster: api.ci
     decorate: true
     labels:
       ci.openshift.io/role: infra
@@ -60,6 +62,8 @@ postsubmits:
       - args:
         - --config-dir=clusters/build-clusters/01_cluster
         - --confirm=true
+        - --level=all
+        - --as=
         - --kubeconfig=/etc/build-farm-credentials/kubeconfig
         - --context=ci/api-build01-ci-devcluster-openshift-com:6443
         command:
@@ -74,6 +78,11 @@ postsubmits:
           valueFrom:
             secretKeyRef:
               key: build01_ci_reg_auth_value.txt
+              name: build-farm-credentials
+        - name: github_client_id
+          valueFrom:
+            secretKeyRef:
+              key: build01_github_client_id
               name: build-farm-credentials
         - name: github_client_secret
           valueFrom:
@@ -106,6 +115,7 @@ postsubmits:
   - agent: kubernetes
     branches:
     - ^master$
+    cluster: api.ci
     decorate: true
     name: branch-ci-openshift-release-master-config-change-trigger
     spec:
@@ -138,6 +148,7 @@ postsubmits:
   - agent: kubernetes
     branches:
     - ^master$
+    cluster: api.ci
     decorate: true
     name: branch-ci-openshift-release-master-config-updates
     spec:
@@ -156,6 +167,7 @@ postsubmits:
   - agent: kubernetes
     branches:
     - ^master$
+    cluster: api.ci
     decorate: true
     labels:
       ci.openshift.io/role: infra
@@ -164,7 +176,9 @@ postsubmits:
       containers:
       - args:
         - --config-dir=core-services
+        - --level=all
         - --confirm=true
+        - --as=
         command:
         - applyconfig
         env:
@@ -193,6 +207,7 @@ postsubmits:
   - agent: kubernetes
     branches:
     - ^master$
+    cluster: api.ci
     decorate: true
     decoration_config:
       grace_period: 0s
@@ -212,7 +227,7 @@ postsubmits:
         - --debug
         command:
         - /app/label_sync/app.binary
-        image: gcr.io/k8s-prow/label_sync:v20200319-1aea24112
+        image: gcr.io/k8s-prow/label_sync:v20200323-ecb75feef
         imagePullPolicy: Always
         name: ""
         resources:
@@ -229,13 +244,35 @@ postsubmits:
   - agent: kubernetes
     branches:
     - ^master$
+    cluster: api.ci
+    decorate: true
+    labels:
+      ci.openshift.io/role: infra
+    name: branch-ci-openshift-release-master-release-controller-annotate
+    spec:
+      containers:
+      - command:
+        - hack/annotate.sh
+        image: registry.svc.ci.openshift.org/ocp/cli-jq:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+      serviceAccountName: config-updater
+  - agent: kubernetes
+    branches:
+    - ^master$
+    cluster: api.ci
     decorate: true
     name: branch-ci-openshift-release-master-services-apply
     spec:
       containers:
       - args:
         - --config-dir=services
+        - --level=all
         - --confirm=true
+        - --as=
         command:
         - applyconfig
         image: registry.svc.ci.openshift.org/ci/applyconfig:latest

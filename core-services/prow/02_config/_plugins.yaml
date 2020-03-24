@@ -88,11 +88,11 @@ approve:
   - integr8ly/ansible-tower-configuration
   - integr8ly/application-monitoring-operator
   - integr8ly/cloud-resource-operator
+  - integr8ly/delorean
   - integr8ly/heimdall
   - integr8ly/installation
   - integr8ly/integreatly-operator
   - integr8ly/rhmi-utils
-  - integr8ly/delorean
   require_self_approval: true
 - lgtm_acts_as_approve: true
   repos:
@@ -294,6 +294,17 @@ config_updater:
         - ci-stg
       name: ci-operator-misc-configs
     ci-operator/config/**/*-hive-v1.yaml:
+      clusters:
+        app.ci:
+        - ci
+        - ci-stg
+        ci/api-build01-ci-devcluster-openshift-com:6443:
+        - ci
+        default:
+        - ci
+        - ci-stg
+      name: ci-operator-misc-configs
+    ci-operator/config/**/*libpod-v1.*.yaml:
       clusters:
         app.ci:
         - ci
@@ -644,6 +655,14 @@ config_updater:
       gzip: true
       name: job-config-3.x
     ci-operator/jobs/**/*infra-periodics*.yaml:
+      clusters:
+        app.ci:
+        - ""
+        default:
+        - ""
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/**/*libpod-v1.*.yaml:
       clusters:
         app.ci:
         - ""

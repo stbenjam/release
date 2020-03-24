@@ -4,6 +4,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws
     decorate: true
     decoration_config:
@@ -90,9 +91,10 @@ presubmits:
           secretName: sentry-dsn
     trigger: (?m)^/test( | .* )e2e-aws,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-builds
     decorate: true
     decoration_config:
@@ -102,6 +104,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-release-4.3-e2e-aws-builds
     rerun_command: /test e2e-aws-builds
+    run_if_changed: ^(pkg/build)
     spec:
       containers:
       - args:
@@ -179,9 +182,10 @@ presubmits:
           secretName: sentry-dsn
     trigger: (?m)^/test( | .* )e2e-aws-builds,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-proxy
     decorate: true
     decoration_config:
@@ -190,6 +194,7 @@ presubmits:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-openshift-controller-manager-release-4.3-e2e-aws-proxy
+    optional: true
     rerun_command: /test e2e-aws-proxy
     spec:
       containers:
@@ -271,6 +276,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-aws-upgrade
     decorate: true
     decoration_config:
@@ -343,9 +349,10 @@ presubmits:
           secretName: sentry-dsn
     trigger: (?m)^/test( | .* )e2e-aws-upgrade,?($|\s.*)
   - agent: kubernetes
-    always_run: false
+    always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-gcp
     decorate: true
     decoration_config:
@@ -434,9 +441,10 @@ presubmits:
           secretName: sentry-dsn
     trigger: (?m)^/test( | .* )e2e-gcp,?($|\s.*)
   - agent: kubernetes
-    always_run: false
+    always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/e2e-gcp-builds
     decorate: true
     decoration_config:
@@ -528,6 +536,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -643,6 +652,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/unit
     decorate: true
     decoration_config:
@@ -756,6 +766,7 @@ presubmits:
     always_run: true
     branches:
     - release-4.3
+    cluster: api.ci
     context: ci/prow/verify
     decorate: true
     decoration_config:

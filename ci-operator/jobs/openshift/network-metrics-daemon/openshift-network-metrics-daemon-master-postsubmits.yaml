@@ -1,14 +1,15 @@
 postsubmits:
-  openshift/cluster-api:
+  openshift/network-metrics-daemon:
   - agent: kubernetes
     branches:
-    - ^release-4\.6$
+    - ^master$
+    cluster: api.ci
     decorate: true
     decoration_config:
       skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
-    name: branch-ci-openshift-cluster-api-release-4.6-images
+    name: branch-ci-openshift-network-metrics-daemon-master-images
     spec:
       containers:
       - args:

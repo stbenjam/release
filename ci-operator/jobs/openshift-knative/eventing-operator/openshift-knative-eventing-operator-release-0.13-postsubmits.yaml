@@ -1,14 +1,15 @@
 postsubmits:
-  openshift/cluster-api:
+  openshift-knative/eventing-operator:
   - agent: kubernetes
     branches:
-    - ^master$
+    - ^release-0\.13$
+    cluster: api.ci
     decorate: true
     decoration_config:
       skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
-    name: branch-ci-openshift-cluster-api-master-images
+    name: branch-ci-openshift-knative-eventing-operator-release-0.13-images
     spec:
       containers:
       - args:
