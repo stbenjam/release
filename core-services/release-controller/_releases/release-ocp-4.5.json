@@ -83,6 +83,14 @@
     "aws-ovn":{
       "optional":true,
       "prowJob":{"name":"release-openshift-ocp-installer-e2e-aws-ovn-4.5"}
+    },
+    "gcp-ovn":{
+      "optional":true,
+      "prowJob":{"name":"release-openshift-ocp-installer-e2e-gcp-ovn-4.5"}
+    },
+    "azure-ovn":{
+      "optional":true,
+      "prowJob":{"name":"release-openshift-ocp-installer-e2e-azure-ovn-4.5"}
     }
   }
 }
