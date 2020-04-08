@@ -6374,8 +6374,8 @@ periodics:
   interval: 4h
   labels:
     ci.openshift.io/release-type: informing
+    job-env: metal-ipi
     job-release: "4.5"
-    job-env: "metal-ipi"
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
   name: release-openshift-origin-installer-e2e-metal-ipi-4.5
   spec:
