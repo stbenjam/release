@@ -6371,7 +6371,7 @@ periodics:
 - agent: kubernetes
   cluster: api.ci
   decorate: true
-  interval: 24h
+  interval: 4h
   labels:
     ci.openshift.io/release-type: informing
     job-release: "4.5"
