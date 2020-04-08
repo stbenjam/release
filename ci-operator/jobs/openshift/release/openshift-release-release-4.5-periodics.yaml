@@ -6393,7 +6393,7 @@ periodics:
       - --org=openshift
       - --repo=installer
       - --branch=release-4.5
-      - --variant=rc
+      - --variant=release-4.5
       command:
       - ci-operator
       env:
