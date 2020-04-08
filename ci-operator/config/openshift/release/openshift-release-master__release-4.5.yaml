@@ -30,6 +30,7 @@ tag_specification:
   namespace: ocp
 tests:
 - as: e2e-metal-ipi
+  cron: '* */8 * * *'
   steps:
     cluster_profile: packet
     workflow: baremetalds-e2e
