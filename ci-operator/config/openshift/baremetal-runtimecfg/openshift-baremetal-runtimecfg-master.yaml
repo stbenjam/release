@@ -67,7 +67,7 @@ tests:
   commands: make test
   container:
     from: src
-- as: e2e-metal-ipi
+- as: e2e-metal-ipi-ovn-ipv6
   steps:
     cluster_profile: packet
     workflow: baremetalds-e2e

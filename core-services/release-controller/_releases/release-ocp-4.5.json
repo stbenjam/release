@@ -52,9 +52,9 @@
       "optional":true,
       "prowJob":{"name":"release-openshift-ocp-installer-e2e-metal-4.5"}
     },
-    "metal-ipi": {
+    "metal-ipi-ovn-ipv6": {
       "optional": true,
-      "prowJob":{"name":"periodic-ci-openshift-release-master-ocp-4.5-e2e-metal-ipi"}
+      "prowJob":{"name":"periodic-ci-openshift-release-master-ocp-4.5-e2e-metal-ipi-ovn-ipv6"}
     },
     "metal-serial":{
       "optional":true,

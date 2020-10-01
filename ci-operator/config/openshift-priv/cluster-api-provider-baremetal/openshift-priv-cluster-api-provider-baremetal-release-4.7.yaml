@@ -50,7 +50,7 @@ tests:
   commands: ./hack/ci-test.sh
   container:
     from: src
-- as: e2e-metal-ipi
+- as: e2e-metal-ipi-ovn-ipv6
   steps:
     cluster_profile: packet
     workflow: baremetalds-e2e

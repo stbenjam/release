@@ -203,7 +203,7 @@ tests:
   steps:
     cluster_profile: vsphere
     workflow: openshift-e2e-vsphere-upi
-- as: e2e-metal-ipi
+- as: e2e-metal-ipi-ovn-ipv6
   steps:
     cluster_profile: packet
     workflow: baremetalds-e2e

@@ -108,7 +108,7 @@ tests:
   openshift_installer_custom_test_image:
     cluster_profile: gcp
     from: stable:cluster-api-actuator-pkg
-- as: e2e-metal-ipi
+- as: e2e-metal-ipi-ovn-ipv6
   steps:
     cluster_profile: packet
     workflow: baremetalds-e2e

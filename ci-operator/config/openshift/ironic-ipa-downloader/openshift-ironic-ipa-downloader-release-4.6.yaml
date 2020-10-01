@@ -45,7 +45,7 @@ tag_specification:
   name: "4.6"
   namespace: ocp
 tests:
-- as: e2e-metal-ipi
+- as: e2e-metal-ipi-ovn-ipv6
   steps:
     cluster_profile: packet
     workflow: baremetalds-e2e
