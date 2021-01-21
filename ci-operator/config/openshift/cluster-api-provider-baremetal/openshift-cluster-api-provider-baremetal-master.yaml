@@ -94,6 +94,7 @@ tests:
     - ref: ipi-install-rbac
     - ref: baremetalds-devscripts-conf-virtualmedia
     - ref: baremetalds-devscripts-setup
+    workflow: baremetalds-e2e
 - as: gofmt
   commands: make fmt
   container:
