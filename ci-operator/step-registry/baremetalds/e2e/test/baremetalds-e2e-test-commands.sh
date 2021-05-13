@@ -4,7 +4,7 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-echo "************ baremetalds test command ************"
+echo "** baremetalds test command **"
 
 collect_artifacts() {
     echo "$(date +%s)" > "${SHARED_DIR}/TEST_TIME_TEST_END"
@@ -15,7 +15,6 @@ collect_artifacts() {
 trap collect_artifacts EXIT TERM
 
 function copy_test_binaries() {
-    # Copy test binaries on packet server
     echo "### Copying test binaries"
     scp "${SSHOPTS[@]}" /usr/bin/openshift-tests /usr/bin/kubectl "root@${IP}:/usr/local/bin"
 }
@@ -23,7 +22,7 @@ function copy_test_binaries() {
 function mirror_test_images() {
         echo "### Mirroring test images"
 
-        DEVSCRIPTS_TEST_IMAGE_REPO=${DS_REGISTRY}/localimages/local-test-image  
+        DEVSCRIPTS_TEST_IMAGE_REPO=${DS_REGISTRY}/localimages/local-test-image
         # shellcheck disable=SC2087
         ssh "${SSHOPTS[@]}" "root@${IP}" bash - << EOF
 openshift-tests images --to-repository ${DEVSCRIPTS_TEST_IMAGE_REPO} > /tmp/mirror
@@ -33,8 +32,8 @@ EOF
 }
 
 function use_minimal_test_list() {
-        echo "### Skipping test images mirroring, fall back to minimal tests list"
-        
+        echo "### Fall back to minimal tests list"
+
         TEST_ARGS="--file /tmp/tests"
         TEST_SKIPS=""
         echo "${TEST_MINIMAL_LIST}" > /tmp/tests
@@ -50,9 +49,9 @@ packet)
     export TEST_PROVIDER=\"\"
 
     echo "### Checking release version"
-    # Mirroring test images is supported only for versions greater than or equal to 4.7
+    # Mirroring is only for 4.7 or later
     if printf '%s\n%s' "4.8" "${DS_OPENSHIFT_VERSION}" | sort -C -V; then
-        mirror_test_images       
+        mirror_test_images
     else
         use_minimal_test_list
     fi
@@ -81,7 +80,7 @@ function suite() {
     fi
 
     scp "${SSHOPTS[@]}" /tmp/tests "root@${IP}:/tmp/tests"
-    
+
     set -x
     ssh "${SSHOPTS[@]}" "root@${IP}" \
         openshift-tests run "${TEST_SUITE}" "${TEST_ARGS:-}" \

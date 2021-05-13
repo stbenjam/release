@@ -4,7 +4,7 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-echo "************ baremetalds packet teardown command ************"
+echo "** baremetalds packet teardown command **"
 
 # Run Ansible playbook
 cd

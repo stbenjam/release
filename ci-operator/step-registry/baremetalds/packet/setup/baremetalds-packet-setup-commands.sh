@@ -4,7 +4,7 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-echo "************ baremetalds packet setup command ************"
+echo "** baremetalds packet setup command **"
 
 # Run Ansible playbook
 cd

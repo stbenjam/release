@@ -4,7 +4,7 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-echo "************ baremetalds e2e conf command ************"
+echo "** baremetalds e2e conf command **"
 
 # List of include cases (from openshift/conformance/parallel)
 

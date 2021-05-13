@@ -4,9 +4,8 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-echo "************ baremetalds devscripts proxy command ************"
+echo "** baremetalds devscripts proxy command **"
 
-# Fetch packet basic configuration
 # shellcheck source=/dev/null
 source "${SHARED_DIR}/packet-conf.sh"
 
@@ -42,7 +41,7 @@ export HTTP_PROXY=http://${IP}:8213/
 export HTTPS_PROXY=http://${IP}:8213/
 export NO_PROXY="redhat.io,quay.io,redhat.com,openshift.com,svc,github.com,githubusercontent.com,google.com,googleapis.com,fedoraproject.org,localhost,127.0.0.1"
 
-export http_proxy=http://${IP}:8213/
-export https_proxy=http://${IP}:8213/
-export no_proxy="redhat.io,quay.io,redhat.com,openshift.com,svc,github.com,githubusercontent.com,google.com,googleapis.com,fedoraproject.org,localhost,127.0.0.1"
+export http_proxy=\$HTTP_PROXY
+export https_proxy=\$HTTPS_PROXY
+export no_proxy=\$NO_PROXY
 EOF
