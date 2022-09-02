@@ -13,10 +13,27 @@ IFS="," read -r -a nodes <<< "$get_nodes"
 num_nodes="${#nodes[@]}"
 # TODO: This must be replaced by code that waits for all the expected number
 # of nodes to be ready.
+
+# oc debug in the default namespace returns podsecurity admission
+# errors, the namespace we run debug in needs to have the right security
+# labels
+# https://docs.openshift.com/container-platform/4.11/authentication/understanding-and-managing-pod-security-admission.html
+oc create ns fips-check -o yaml | \
+  oc label -f - \
+  security.openshift.io/scc.podSecurityLabelSync=false \
+  pod-security.kubernetes.io/enforce=privileged \
+  pod-security.kubernetes.io/audit=privileged \
+  pod-security.kubernetes.io/warn=privileged
+
+function cleanup() {
+  oc delete ns fips-check
+}
+trap cleanup EXIT
+
 for (( i=0; i<$num_nodes; i++ )); do
   attempt=0
   while true; do
-      out=$(oc --request-timeout=60s -n default debug node/"${nodes[i]}" -- cat /proc/sys/crypto/fips_enabled || true)
+      out=$(oc --request-timeout=60s -n fips-check debug node/"${nodes[i]}" -- cat /proc/sys/crypto/fips_enabled || true)
       if [[ ! -z "${out}" ]]; then
           break
       fi
