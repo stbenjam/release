@@ -1,7 +1,7 @@
 workflow:
-  as: hypershift-aws-e2e
+  as: hypershift-aws-tests
   documentation: |-
-    The HyperShift aws e2e workflow executes tests against a new ephemeral
+    The HyperShift aws tests workflow executes tests against a new ephemeral
     HyperShift cluster. Administrative access to the control plane is provided
     via the `KUBECONFIG` environment variable.
 
@@ -17,21 +17,20 @@ workflow:
 
     - Alberto Lamela (agarcial@redhat.com)
     - Seth Jennings (sjenning@redhat.com)
-    - Dan Mace (dmace@redhat.com)
+    - Alvaro Aleman (alvaroaleman@redhat.com)
     - Cesar Wong (cewong@redhat.com)
 
     Learn more about HyperShift here: https://github.com/openshift/hypershift
 
     Track HyperShift's development here: https://issues.redhat.com/projects/HOSTEDCP
   steps:
-    post:
-    - chain: hypershift-dump
-    - chain: hypershift-aws-destroy
-    - chain: hypershift-aws-destroy-nested-management-cluster
     test:
-    - chain: hypershift-e2e
+    - chain: hypershift-aws-run-tests
+      env:
+        - default: ${KUBECONFIG}
+          name: KUBECONFIG
     pre:
     - ref: ipi-install-rbac
-    - chain: hypershift-aws-setup-nested-management-cluster
     - ref: hypershift-install
-    - chain: hypershift-aws-create
+    post:
+      - chain: gather

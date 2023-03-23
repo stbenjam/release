@@ -1,17 +1,15 @@
 {
-	"path": "hypershift/aws/e2e/hypershift-aws-e2e-workflow.yaml",
+	"path": "hypershift/aws/tests/external/hypershift-aws-tests-external-workflow.yaml",
 	"owners": {
 		"approvers": [
 			"csrwng",
 			"enxebre",
-			"sjenning",
-			"imain"
+			"sjenning"
 		],
 		"reviewers": [
 			"csrwng",
 			"enxebre",
-			"sjenning",
-			"imain"
+			"sjenning"
 		]
 	}
 }

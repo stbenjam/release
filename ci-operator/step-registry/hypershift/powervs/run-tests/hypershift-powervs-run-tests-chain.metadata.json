@@ -1,0 +1,19 @@
+{
+	"path": "hypershift/powervs/run-tests/hypershift-powervs-run-tests-chain.yaml",
+	"owners": {
+		"approvers": [
+			"csrwng",
+			"enxebre",
+			"sjenning",
+			"mkumatag",
+			"dharaneeshvrd"
+		],
+		"reviewers": [
+			"csrwng",
+			"enxebre",
+			"sjenning",
+			"mkumatag",
+			"dharaneeshvrd"
+		]
+	}
+}

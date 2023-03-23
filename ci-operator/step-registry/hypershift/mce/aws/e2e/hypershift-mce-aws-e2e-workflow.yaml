@@ -1,0 +1,14 @@
+workflow:
+  as: hypershift-mce-aws-e2e
+  documentation: |-
+    The HyperShift mce aws e2e workflow executes tests against a new ephemeral
+  steps:
+    post:
+    - chain: hypershift-mce-aws-destroy
+    - chain: ipi-aws-post
+    test:
+    - chain: hypershift-e2e
+    pre:
+    - chain: ipi-aws-pre
+    - ref: hypershift-mce-install
+    - chain: hypershift-mce-aws-create

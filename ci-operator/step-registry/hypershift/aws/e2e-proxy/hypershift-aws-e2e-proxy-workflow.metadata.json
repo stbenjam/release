@@ -1,5 +1,5 @@
 {
-	"path": "hypershift/aws/e2e/hypershift-aws-e2e-workflow.yaml",
+	"path": "hypershift/aws/e2e-proxy/hypershift-aws-e2e-proxy-workflow.yaml",
 	"owners": {
 		"approvers": [
 			"csrwng",

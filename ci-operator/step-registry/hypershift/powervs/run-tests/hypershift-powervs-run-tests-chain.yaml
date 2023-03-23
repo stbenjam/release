@@ -1,0 +1,57 @@
+chain:
+  as: hypershift-powervs-run-tests
+  steps:
+    - as: run-tests
+      cli: latest
+      commands: |-
+        # Complie
+        make
+        
+        # Install hypershift
+        bin/hypershift --version
+        bin/hypershift install --hypershift-image ${HYPERSHIFT_RELEASE_LATEST}
+        
+        # Running tests test
+        bin/test-tests \
+        -test.v \
+        -test.timeout=2h10m \
+        -test.run="^TestCreateCluster$" \
+        --tests.platform=PowerVS \
+        --tests.pull-secret-file=/etc/ci-pull-credentials/.dockerconfigjson \
+        --tests.base-domain=hypershift-ppc64le.com \
+        --tests.latest-release-image=${OCP_IMAGE_MULTI} \
+        --tests.control-plane-operator-image=${HYPERSHIFT_RELEASE_LATEST_CPO} \
+        --tests.node-pool-replicas=2 \
+        --tests.powervs-resource-group=ibm-hypershift-dev \
+        --tests.powervs-region=osa \
+        --tests.powervs-zone=osa21 \
+        --tests.powervs-vpc-region=jp-osa \
+        --tests.powervs-proc-type=dedicated \
+        --tests.powervs-processors=1
+      credentials:
+        - mount_path: /etc/hypershift-pool-powervs-credentials
+          name: hypershift-pool-powervs-credentials
+          namespace: test-credentials
+        - mount_path: /etc/ci-pull-credentials
+          name: ci-pull-credentials
+          namespace: test-credentials
+      dependencies:
+        - env: OCP_IMAGE_MULTI
+          name: release:multi-latest
+        - env: HYPERSHIFT_RELEASE_LATEST
+          name: hypershift-operator
+        - env: HYPERSHIFT_RELEASE_LATEST_CPO
+          name: hypershift
+      env:
+        - default: ${SHARED_DIR}/management_cluster_kubeconfig
+          name: KUBECONFIG
+        - default: /etc/hypershift-pool-powervs-credentials/credentials
+          name: IBMCLOUD_CREDENTIALS
+      from: test-bin
+      grace_period: 30m0s
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      timeout: 2h30m0s
+
