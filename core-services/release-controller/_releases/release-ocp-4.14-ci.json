@@ -147,7 +147,14 @@
       "maxRetries": 3,
       "prowJob":{
         "name":"periodic-ci-openshift-hypershift-release-4.14-periodics-e2e-aws-ovn"
-      }
+      },
+      "upgrade": true,
+      "upgradeFromRelease": {
+        "candidate": {
+          "stream": "ci",
+          "version": "4.13"
+        }
+      },
     },
     "upgrade": {
       "optional": true,
