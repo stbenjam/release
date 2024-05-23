@@ -115,6 +115,12 @@ acknowledge-critical-fixes-only:
 	$(MAKE) prow-config
 
 revert-acknowledge-critical-fixes-only:
+	@if [ -z "$(RELEASE)" ]; then \
+		echo "RELEASE is not specified. Please specify RELEASE=x.x"; \
+		exit 1; \
+	fi
+	# ocp-build-data is special
+	./hack/acknowledge-critical-fix-repos-single-repo.py openshift-eng/ocp-build-data openshift-$(RELEASE) --apply
 	$(SKIP_PULL) || $(CONTAINER_ENGINE) pull $(CONTAINER_ENGINE_OPTS) registry.ci.openshift.org/ci/tide-config-manager:latest
 	$(CONTAINER_ENGINE) run $(CONTAINER_ENGINE_OPTS) $(CONTAINER_USER) --rm -v "$(CURDIR)/core-services/prow/02_config:/config$(VOLUME_MOUNT_FLAGS)" registry.ci.openshift.org/ci/tide-config-manager:latest --prow-config-dir /config --sharded-prow-config-base-dir /config --lifecycle-phase revert-critical-fixes-only
 	$(MAKE) prow-config
