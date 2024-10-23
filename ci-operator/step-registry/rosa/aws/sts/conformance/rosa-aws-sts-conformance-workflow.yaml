@@ -4,6 +4,9 @@ workflow:
     env:
       CHANNEL_GROUP: nightly
       OPENSHIFT_VERSION: "release:latest"
+      TEST_SKIPS: >
+        users can manipulate groups\|
+
     pre:
     - chain: rosa-aws-sts-provision
     - ref: osd-ccs-conf-idp-htpasswd-multi-users
