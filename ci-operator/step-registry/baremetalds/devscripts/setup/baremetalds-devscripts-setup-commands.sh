@@ -300,6 +300,18 @@ EOF2
     sudo firewall-cmd --reload
 }
 
+# Some cloud providers replace the CentOS mirroring configuration with
+# their own, which may not be as reliable. Restore the default
+# configuration
+for f in /etc/yum.repos.d/*.repo; do
+  if grep -q '^baseurl=.*networklayer\.com' "$f"; then
+    sed -i \
+      -e '/^#metalink=/s/^#//' \
+      -e '/^baseurl=.*networklayer\.com/s/^/#/' \
+      "$f"
+  fi
+done
+
 # Some Packet images have a file /usr/config left from the provisioning phase.
 # The problem is that sos expects it to be a directory. Since we don't care
 # about the Packet provisioner, remove the file if it's present.
